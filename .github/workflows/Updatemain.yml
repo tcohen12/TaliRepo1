@@ -1,0 +1,27 @@
+name: main-workflow
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - run: echo "build started"
+      - run: echo "build completed"
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ always () }}
+    steps:
+      - run: echo "test started"
+      - run: echo "test completed"
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "deploy started"
+      - run: echo "deploy completed"
+    needs: test
